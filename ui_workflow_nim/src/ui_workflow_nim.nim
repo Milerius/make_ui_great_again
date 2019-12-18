@@ -9,8 +9,8 @@ when defined(macosx):
     {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
 
 when defined(windows):
-    {.passL: "-L\"" & os.getEnv("ProgramFiles(x86)").normalizedPath() & "/ui_workflow/lib\"" & " -lui_workflow -L\""  & os.getEnv("VCPKG_ROOT") & "/installed/x64-windows-static/lib\" -lglad -lSDL2 -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 -lwinmm.lib -lversion.lib -lsetupapi.lib".}
-    {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS -I\"" & os.getEnv("ProgramFiles(x86)").normalizedPath() & "/ui_workflow/include\"".}
+    {.passL: "-L\"" & os.getEnv("ProgramFiles(x86)") & "/ui_workflow/lib\"" & " -lui_workflow -L\""  & os.getEnv("VCPKG_ROOT") & "/installed/x64-windows-static/lib\" -lglad -lSDL2 -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 -lwinmm.lib -lversion.lib -lsetupapi.lib".}
+    {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS -I\"" & os.getEnv("ProgramFiles(x86)") & "/ui_workflow/include\"".}
 
 include ui_workflow_nim/nimgui
 
