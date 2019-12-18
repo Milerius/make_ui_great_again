@@ -1,6 +1,9 @@
 when defined(macosx):
     {.passL: "-lui_workflow".}
     {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
+elif defined(linux):
+    {.passL: "-lui_workflow".}
+    {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
 
 include ui_workflow_nim/nimgui
 
