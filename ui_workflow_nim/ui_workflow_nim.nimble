@@ -5,6 +5,7 @@ author        = "milerius"
 description   = "ui bindings nim"
 license       = "MIT"
 srcDir        = "src"
+backend       = "cpp"
 
 
 

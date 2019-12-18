@@ -23,6 +23,7 @@ target_sources(ui_workflow PUBLIC
         ui.wrapper.cpp
         ui_wrapper.cpp
         PUBLIC
+        private/cimgui.cpp
         ${imgui_SOURCE_DIR}/imgui_demo.cpp
         ${imgui_SOURCE_DIR}/imgui_draw.cpp
         ${imgui_SOURCE_DIR}/examples/imgui_impl_sdl.cpp
@@ -49,6 +50,7 @@ target_link_libraries(ui_example_cpp PUBLIC ui_workflow)
 include(GNUInstallDirs)
 
 install(FILES ui_wrapper.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES private/cimgui.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(TARGETS ui_workflow EXPORT UiWorkflow
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}

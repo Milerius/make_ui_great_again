@@ -12,6 +12,9 @@ import ui_workflow_nim
 var ctx = antara_ui_create("Hello", 200, 200)
 while antara_is_running(ctx) == 0:
   antara_pre_update(ctx)
+  igBegin("Foo")
+  igButton("Hello")
+  igEnd()
   antara_show_demo(ctx)
   antara_update(ctx)
 antara_ui_destroy(ctx)

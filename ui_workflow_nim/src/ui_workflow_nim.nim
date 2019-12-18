@@ -1,5 +1,6 @@
-when defined(macosx):
-    {.passL:"-lui_workflow".}
+include private/nimgui
+#when defined(macosx):
+#    {.passL:"-lui_workflow".}
     #{.link: "/usr/local/lib/libui_workflow.dylib".}
 
 const
