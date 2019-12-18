@@ -1,7 +1,8 @@
-include private/nimgui
-#when defined(macosx):
-#    {.passL:"-lui_workflow".}
-    #{.link: "/usr/local/lib/libui_workflow.dylib".}
+when defined(macosx):
+    {.passL: "-lui_workflow".}
+    {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
+
+include ui_workflow_nim/nimgui
 
 const
     ui = "<ui_wrapper.h>"
