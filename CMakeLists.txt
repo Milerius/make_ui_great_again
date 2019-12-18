@@ -33,14 +33,18 @@ target_sources(ui_workflow PRIVATE
         ${imgui_SOURCE_DIR}/imgui.cpp
         $<$<PLATFORM_ID:Darwin>:${imgui_SOURCE_DIR}/examples/imgui_impl_osx.mm>
         $<$<PLATFORM_ID:Windows>:${imgui_SOURCE_DIR}/examples/imgui_impl_win32.cpp>)
+if (WIN32)
+    set_property(TARGET ui_workflow PROPERTY
+            MSVC_RUNTIME_LIBRARY "MultiThreaded")
+endif()
 target_include_directories(ui_workflow PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/examples/ ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_features(ui_workflow PRIVATE cxx_std_17)
 target_link_libraries(ui_workflow
         PRIVATE
         $<$<PLATFORM_ID:Darwin>:SDL2::SDL2-static>
         $<$<PLATFORM_ID:Linux>:SDL2::SDL2-static>
-        $<$<PLATFORM_ID:Windows>:SDL2::SDL2>
-        SDL2::SDL2main
+        $<$<PLATFORM_ID:Windows>:SDL2::SDL2-static>
+        #SDL2::SDL2main
         glad::glad)
 
 add_executable(ui_example main.c)
