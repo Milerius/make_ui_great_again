@@ -3,6 +3,8 @@ project(ui_workflow LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_SHARED_LIBRARY_PREFIX "libantara")
+#set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 message(STATUS "ui as shared")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}_nim)
@@ -17,12 +19,11 @@ find_package(glad CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 
 add_library(ui_workflow)
-target_sources(ui_workflow PUBLIC
+target_sources(ui_workflow PRIVATE
         ui_wrapper.h
         ui.wrapper.hpp
         ui.wrapper.cpp
         ui_wrapper.cpp
-        PUBLIC
         private/cimgui.cpp
         ${imgui_SOURCE_DIR}/imgui_demo.cpp
         ${imgui_SOURCE_DIR}/imgui_draw.cpp
@@ -34,12 +35,13 @@ target_sources(ui_workflow PUBLIC
         $<$<PLATFORM_ID:Windows>:${imgui_SOURCE_DIR}/examples/imgui_impl_win32.cpp>)
 target_include_directories(ui_workflow PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/examples/ ${CMAKE_CURRENT_SOURCE_DIR})
 target_compile_features(ui_workflow PRIVATE cxx_std_17)
-target_link_libraries(ui_workflow PUBLIC
-        glad::glad
-        SDL2::SDL2main
+target_link_libraries(ui_workflow
+        PRIVATE
         $<$<PLATFORM_ID:Darwin>:SDL2::SDL2-static>
         $<$<PLATFORM_ID:Linux>:SDL2::SDL2-static>
-        $<$<PLATFORM_ID:Windows>:SDL2::SDL2>)
+        $<$<PLATFORM_ID:Windows>:SDL2::SDL2>
+        SDL2::SDL2main
+        glad::glad)
 
 add_executable(ui_example main.c)
 target_link_libraries(ui_example PUBLIC ui_workflow)

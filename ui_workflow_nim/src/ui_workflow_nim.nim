@@ -1,7 +1,10 @@
-when defined(macosx):
-    {.passL: "-lui_workflow".}
+import os
+
+when defined(linux):
+    {.passL: "-lui_workflow -ldl -pthread -L" & os.getEnv("VCPKG_ROOT") & "/installed/x64-linux/lib -lglad -lSDL2".}
     {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
-elif defined(linux):
+
+when defined(macosx):
     {.passL: "-lui_workflow".}
     {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
 

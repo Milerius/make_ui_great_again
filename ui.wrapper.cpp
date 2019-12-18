@@ -8,6 +8,7 @@
 #include <iostream>
 
 //! Dependencies Headers
+#include <SDL2/SDL.h>
 #include <glad/glad.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
@@ -21,6 +22,8 @@
 
 //! Project Headers
 #include "ui.wrapper.hpp"
+
+inline SDL_Window* m_window;
 
 antara_gui::antara_gui(const char* title, std::size_t width, std::size_t height)
 {
@@ -168,4 +171,106 @@ antara_gui::show_demo()
     static bool open = true;
     ImGui::ShowDemoWindow(&open);
     if (not open) m_close = true;
+}
+
+timer::timer()
+{
+    // Initialize the variables
+    m_start_ticks  = 0;
+    m_paused_ticks = 0;
+
+    m_paused  = false;
+    m_started = false;
+}
+
+void timer::start()
+{
+    // Start the timer
+    m_started = true;
+
+    // Unpause the timer
+    m_paused = false;
+
+    // Get the current clock time
+    m_start_ticks  = SDL_GetTicks();
+    m_paused_ticks = 0;
+}
+
+void timer::stop()
+{
+    // Stop the timer
+    m_started = false;
+
+    // Unpause the timer
+    m_paused = false;
+
+    // Clear tick variables
+    m_start_ticks  = 0;
+    m_paused_ticks = 0;
+}
+
+void timer::pause()
+{
+    // If the timer is running and isn't already paused
+    if (m_started && !m_paused)
+    {
+        // Pause the timer
+        m_paused = true;
+
+        // Calculate the paused ticks
+        m_paused_ticks = SDL_GetTicks() - m_start_ticks;
+        m_start_ticks  = 0;
+    }
+}
+
+void timer::unpause()
+{
+    // If the timer is running and paused
+    if (m_started && m_paused)
+    {
+        // Unpause the timer
+        m_paused = false;
+
+        // Reset the starting ticks
+        m_start_ticks = SDL_GetTicks() - m_paused_ticks;
+
+        // Reset the paused ticks
+        m_paused_ticks = 0;
+    }
+}
+
+uint32_t timer::getTicks()
+{
+    // The actual timer time
+    Uint32 time = 0;
+
+    // If the timer is running
+    if (m_started)
+    {
+        // If the timer is paused
+        if (m_paused)
+        {
+            // Return the number of ticks when the timer was paused
+            time = m_paused_ticks;
+        }
+        else
+        {
+            // Return the current time minus the start time
+            time = SDL_GetTicks() - m_start_ticks;
+        }
+    }
+
+    return time;
+}
+
+bool timer::isStarted()
+{
+    // Timer is running and paused or unpaused
+    return m_started;
+}
+
+bool timer::isPaused()
+{
+    // Timer is running and paused
+    return m_paused && m_started;
 }
