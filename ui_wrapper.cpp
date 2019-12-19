@@ -53,3 +53,9 @@ antara_show_demo(t_antara_ui* instance)
 {
     if (instance != nullptr) { static_cast<antara_gui*>(instance->obj)->show_demo(); }
 }
+
+void
+antara_close_window(t_antara_ui* instance)
+{
+    if (instance != nullptr) { static_cast<antara_gui*>(instance->obj)->set_close(true); };
+}

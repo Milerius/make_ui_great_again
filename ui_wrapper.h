@@ -17,6 +17,7 @@ extern "C"
     void         antara_update(t_antara_ui* instance);
     int          antara_is_running(t_antara_ui* instance);
     void         antara_show_demo(t_antara_ui* instance);
+    void         antara_close_window(t_antara_ui* instance);
 
 
 #ifdef __cplusplus

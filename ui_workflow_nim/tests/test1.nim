@@ -17,4 +17,5 @@ while antara_is_running(ctx) == 0:
   igEnd()
   antara_show_demo(ctx)
   antara_update(ctx)
+antara_close_window(ctx)  
 antara_ui_destroy(ctx)

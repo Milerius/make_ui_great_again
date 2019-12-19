@@ -5,7 +5,7 @@ when defined(linux):
     {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
 
 when defined(macosx):
-    {.passL: "-lui_workflow".}
+    {.passL: "-lui_workflow -L" & os.getEnv("VCPKG_ROOT") & "/installed/x64-osx/lib -lglad -lSDL2 -liconv -framework CoreVideo -framework Cocoa -framework IOKit -framework ForceFeedback -framework Carbon -framework CoreAudio -framework AudioToolbox".}
     {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
 
 when defined(windows):
@@ -27,3 +27,4 @@ proc antara_pre_update*(instance: ptr t_antara_ui) {.importc: "antara_pre_update
 proc antara_update*(instance: ptr t_antara_ui) {.importc: "antara_update", header: ui.} 
 proc antara_is_running*(instance: ptr t_antara_ui): cint {.importc: "antara_is_running", header: ui.}
 proc antara_show_demo*(instance: ptr t_antara_ui) {.importc: "antara_show_demo", header: ui.}
+proc antara_close_window*(instance: ptr t_antara_ui) {.importc: "antara_close_window", header: ui.}
