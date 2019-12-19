@@ -14,7 +14,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}_
 include(FetchContent)
 FetchContent_Declare(imgui
         URL https://github.com/rokups/imgui/archive/hdpi-support.zip)
-FetchContent_MakeAvailable(imgui)
+FetchContent_Declare(
+        iconfontcppheaders
+        URL https://github.com/juliettef/IconFontCppHeaders/archive/master.zip
+)
+FetchContent_MakeAvailable(imgui iconfontcppheaders)
 find_package(glad CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 
@@ -37,7 +41,7 @@ if (WIN32)
     set_property(TARGET ui_workflow PROPERTY
             MSVC_RUNTIME_LIBRARY "MultiThreaded")
 endif()
-target_include_directories(ui_workflow PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/examples/ ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(ui_workflow PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/examples/ ${CMAKE_CURRENT_SOURCE_DIR} ${iconfontcppheaders_SOURCE_DIR})
 target_compile_features(ui_workflow PRIVATE cxx_std_17)
 target_link_libraries(ui_workflow
         PRIVATE

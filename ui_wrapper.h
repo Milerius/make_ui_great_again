@@ -8,6 +8,11 @@ extern "C"
 {
 #endif
 
+    typedef enum awesome_icon
+    {
+        value
+    } e_awesome_icon;
+
     struct antara_ui;
     typedef struct antara_ui t_antara_ui;
 
@@ -18,6 +23,9 @@ extern "C"
     int          antara_is_running(t_antara_ui* instance);
     void         antara_show_demo(t_antara_ui* instance);
     void         antara_close_window(t_antara_ui* instance);
+    void         antara_load_font(t_antara_ui* instance, const char* path, float size_pixel);
+    void         antara_awesome_load_font(t_antara_ui* instance, const char* path, float size_pixel);
+    const char*  icon(e_awesome_icon id);
 
 
 #ifdef __cplusplus

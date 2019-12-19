@@ -8,6 +8,7 @@
 #include <iostream>
 
 //! Dependencies Headers
+#include <IconsFontAwesome5.h>
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 #include <imgui.h>
@@ -173,6 +174,37 @@ antara_gui::show_demo()
     if (not open) m_close = true;
 }
 
+void
+antara_gui::load_font(const char* path, float size_pixels) noexcept
+{
+    auto im_gui_io = ImGui::GetIO();
+
+    if (not m_first_font)
+    {
+        im_gui_io.Fonts->Clear();
+        m_first_font = true;
+    }
+
+    im_gui_io.Fonts->AddFontFromFileTTF(path, size_pixels);
+}
+void
+antara_gui::load_awesome_font(const char* path, float size_pixels) noexcept
+{
+    static const ImWchar icons_ranges[] = {ICON_MIN_FA, ICON_MAX_FA, 0};
+    ImFontConfig         icons_config;
+    auto                 im_gui_io = ImGui::GetIO();
+    icons_config.MergeMode         = true;
+    icons_config.PixelSnapH        = true;
+
+    if (not m_first_font)
+    {
+        im_gui_io.Fonts->Clear();
+        m_first_font = true;
+    }
+
+    im_gui_io.Fonts->AddFontFromFileTTF(path, size_pixels, &icons_config, icons_ranges);
+}
+
 timer::timer()
 {
     // Initialize the variables
@@ -183,7 +215,8 @@ timer::timer()
     m_started = false;
 }
 
-void timer::start()
+void
+timer::start()
 {
     // Start the timer
     m_started = true;
@@ -196,7 +229,8 @@ void timer::start()
     m_paused_ticks = 0;
 }
 
-void timer::stop()
+void
+timer::stop()
 {
     // Stop the timer
     m_started = false;
@@ -209,7 +243,8 @@ void timer::stop()
     m_paused_ticks = 0;
 }
 
-void timer::pause()
+void
+timer::pause()
 {
     // If the timer is running and isn't already paused
     if (m_started && !m_paused)
@@ -223,7 +258,8 @@ void timer::pause()
     }
 }
 
-void timer::unpause()
+void
+timer::unpause()
 {
     // If the timer is running and paused
     if (m_started && m_paused)
@@ -239,7 +275,8 @@ void timer::unpause()
     }
 }
 
-uint32_t timer::getTicks()
+uint32_t
+timer::getTicks()
 {
     // The actual timer time
     Uint32 time = 0;
@@ -263,13 +300,15 @@ uint32_t timer::getTicks()
     return time;
 }
 
-bool timer::isStarted()
+bool
+timer::isStarted()
 {
     // Timer is running and paused or unpaused
     return m_started;
 }
 
-bool timer::isPaused()
+bool
+timer::isPaused()
 {
     // Timer is running and paused
     return m_paused && m_started;

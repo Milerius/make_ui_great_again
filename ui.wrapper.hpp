@@ -53,6 +53,7 @@ class timer
 
 class antara_gui
 {
+	bool 		  m_first_font{false};
     void*         m_gl_context;
     timer         m_timer;
     bool          m_close{false};
@@ -67,6 +68,8 @@ class antara_gui
     void show_demo();
     void pre_update() noexcept;
     void update() noexcept;
+    void load_font(const char* path, float size_pixels = 15.f) noexcept;
+    void load_awesome_font(const char* path, float size_pixels = 15.f) noexcept;;
 };
 
 #endif // UI_WORKFLOW_UI_WRAPPER_HPP

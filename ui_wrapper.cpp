@@ -59,3 +59,13 @@ antara_close_window(t_antara_ui* instance)
 {
     if (instance != nullptr) { static_cast<antara_gui*>(instance->obj)->set_close(true); };
 }
+void
+antara_load_font(t_antara_ui* instance, const char* path, float size_pixel)
+{
+    if (instance != nullptr) { static_cast<antara_gui*>(instance->obj)->load_font(path, size_pixel); };
+}
+void
+antara_awesome_load_font(t_antara_ui* instance, const char* path, float size_pixel)
+{
+    if (instance != nullptr) { static_cast<antara_gui*>(instance->obj)->load_awesome_font(path, size_pixel); };
+}

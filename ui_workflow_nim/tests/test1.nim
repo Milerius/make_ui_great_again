@@ -10,6 +10,8 @@ import unittest
 import ui_workflow_nim
 
 var ctx = antara_ui_create("Hello", 200, 200)
+antara_load_font(ctx, "Ruda-Bold.ttf", 15.0)
+antara_awesome_load_font(ctx, "fa-solid-900.ttf", 16.0)
 while antara_is_running(ctx) == 0:
   antara_pre_update(ctx)
   igBegin("Foo")
