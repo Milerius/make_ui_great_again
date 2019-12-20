@@ -69,3 +69,23 @@ antara_awesome_load_font(t_antara_ui* instance, const char* path, float size_pix
 {
     if (instance != nullptr) { static_cast<antara_gui*>(instance->obj)->load_awesome_font(path, size_pixel); };
 }
+
+t_antara_image
+antara_load_image(t_antara_ui* instance, const char* id, const char* path)
+{
+    opengl_image img;
+    if (instance != nullptr) {
+        static_cast<antara_gui*>(instance->obj)->load_image(id, path, img);
+    };
+    return {img.id, img.width, img.height};
+}
+
+t_antara_image
+antara_get_image(t_antara_ui* instance, const char* id)
+{
+    if (instance != nullptr) {
+        auto res = static_cast<antara_gui*>(instance->obj)->get_image(id);
+        return {res.id, res.width, res.height};
+    };
+    return {};
+}

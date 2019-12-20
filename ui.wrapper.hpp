@@ -6,8 +6,9 @@
 #define UI_WORKFLOW_UI_WRAPPER_HPP
 
 // C System Headers
-#include <stdint.h>
 #include <cstddef>
+#include <stdint.h>
+#include <unordered_map>
 
 class timer
 {
@@ -16,28 +17,21 @@ class timer
     timer();
 
     // The various clock actions
-    void
-    start();
+    void start();
 
-    void
-    stop();
+    void stop();
 
-    void
-    pause();
+    void pause();
 
-    void
-    unpause();
+    void unpause();
 
     // Gets the timer's time
-    uint32_t
-    getTicks();
+    uint32_t getTicks();
 
     // Checks the status of the timer
-    bool
-    isStarted();
+    bool isStarted();
 
-    bool
-    isPaused();
+    bool isPaused();
 
   private:
     // The clock time when the timer started
@@ -51,14 +45,22 @@ class timer
     bool m_started;
 };
 
+struct opengl_image
+{
+    unsigned int id;
+    int          width;
+    int          height;
+};
+
 class antara_gui
 {
-	bool 		  m_first_font{false};
-    void*         m_gl_context;
-    timer         m_timer;
-    bool          m_close{false};
-    int           m_fps_cap{30};
-    void          render();
+    bool                                          m_first_font{false};
+    void*                                         m_gl_context;
+    timer                                         m_timer;
+    bool                                          m_close{false};
+    int                                           m_fps_cap{30};
+    void                                          render();
+    std::unordered_map<const char*, opengl_image> m_images;
 
   public:
     antara_gui(const char* title, std::size_t width = 1ull, std::size_t height = 1ull);
@@ -69,7 +71,9 @@ class antara_gui
     void pre_update() noexcept;
     void update() noexcept;
     void load_font(const char* path, float size_pixels = 15.f) noexcept;
-    void load_awesome_font(const char* path, float size_pixels = 15.f) noexcept;;
+    void load_awesome_font(const char* path, float size_pixels = 15.f) noexcept;
+    bool load_image(const char* id, const char*path, opengl_image& img);
+    opengl_image& get_image(const char* id);
 };
 
 #endif // UI_WORKFLOW_UI_WRAPPER_HPP

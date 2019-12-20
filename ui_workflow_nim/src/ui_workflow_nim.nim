@@ -22,8 +22,10 @@ const
 type
     e_awesome_icon* = enum
         value
-
-type
+    t_antara_image* {.importc: "t_antara_image", header: ui.} = object
+        id* {.importc: "id".}: cuint
+        width* {.importc: "width".}: cint
+        height* {.importc: "height".}: cint
     t_antara_ui* {.importc: "t_antara_ui", header: ui, pure,
             incompleteStruct.} = object
 
@@ -44,3 +46,5 @@ proc antara_load_font*(instance: ptr t_antara_ui; path: cstring;
 proc antara_awesome_load_font*(instance: ptr t_antara_ui; path: cstring;
         size_pixel: cfloat) {.importc: "antara_awesome_load_font", header: ui.}
 proc icon*(id: e_awesome_icon): cstring {.importc: "icon", header: ui.}
+proc antara_load_image*(instance: ptr t_antara_ui, id: cstring; path: cstring): t_antara_image {.importc: "antara_load_image", header: ui.}
+proc antara_get_image*(instance: ptr t_antara_ui, id: cstring): t_antara_image {.importc: "antara_get_image", header: ui.}
