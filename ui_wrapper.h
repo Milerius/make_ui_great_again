@@ -34,6 +34,7 @@ extern "C"
     void           antara_awesome_load_font(t_antara_ui* instance, const char* path, float size_pixel);
     const char*    icon(e_awesome_icon id);
     t_antara_image antara_load_image(t_antara_ui* instance, const char* id, const char* path);
+    t_antara_image antara_load_image_ws(t_antara_ui* instance, const char* path);;
     t_antara_image antara_get_image(t_antara_ui* instance, const char* id);
     t_antara_image antara_draw_image(t_antara_ui* instance, t_antara_image img);
 

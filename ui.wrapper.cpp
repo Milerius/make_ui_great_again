@@ -359,3 +359,8 @@ antara_gui::get_image(const char* id)
 {
     return m_images.at(id);
 }
+bool
+antara_gui::load_image(const char* path, opengl_image& img)
+{
+   return LoadTextureFromFile(path, &img.id, &img.width, &img.height);
+}

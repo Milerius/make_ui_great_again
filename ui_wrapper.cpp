@@ -89,3 +89,13 @@ antara_get_image(t_antara_ui* instance, const char* id)
     };
     return {};
 }
+
+t_antara_image
+antara_load_image_ws(t_antara_ui* instance, const char* path)
+{
+    opengl_image img;
+    if (instance != nullptr) {
+        static_cast<antara_gui*>(instance->obj)->load_image(path, img);
+    };
+    return {img.id, img.width, img.height};
+}

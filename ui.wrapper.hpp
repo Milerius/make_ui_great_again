@@ -73,6 +73,7 @@ class antara_gui
     void load_font(const char* path, float size_pixels = 15.f) noexcept;
     void load_awesome_font(const char* path, float size_pixels = 15.f) noexcept;
     bool load_image(const char* id, const char*path, opengl_image& img);
+	bool load_image(const char*path, opengl_image& img);
     opengl_image& get_image(const char* id);
 };
 
