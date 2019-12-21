@@ -4,6 +4,9 @@
 
 #include <cstdlib>
 
+//! Project Headers
+#include "ui.wrapper.hpp"
+
 //! C++ System Headers
 #include <iostream>
 
@@ -23,8 +26,7 @@
 
 #endif
 
-//! Project Headers
-#include "ui.wrapper.hpp"
+
 
 inline SDL_Window* m_window;
 

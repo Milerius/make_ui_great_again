@@ -5,6 +5,43 @@
 #ifndef UI_WORKFLOW_UI_WRAPPER_HPP
 #define UI_WORKFLOW_UI_WRAPPER_HPP
 
+#ifdef UI_WORKFLOW_STATIC_DEFINE
+#  define UI_WORKFLOW_EXPORT
+#  define UI_WORKFLOW_NO_EXPORT
+#else
+#  ifndef UI_WORKFLOW_EXPORT
+#    ifdef ui_workflow_EXPORTS
+/* We are building this library */
+#      define UI_WORKFLOW_EXPORT __declspec(dllexport)
+#    else
+/* We are using this library */
+#      define UI_WORKFLOW_EXPORT __declspec(dllimport)
+#    endif
+#  endif
+
+#  ifndef UI_WORKFLOW_NO_EXPORT
+#    define UI_WORKFLOW_NO_EXPORT
+#  endif
+#endif
+
+#ifndef UI_WORKFLOW_DEPRECATED
+#  define UI_WORKFLOW_DEPRECATED __attribute__ ((__deprecated__))
+#endif
+
+#ifndef UI_WORKFLOW_DEPRECATED_EXPORT
+#  define UI_WORKFLOW_DEPRECATED_EXPORT UI_WORKFLOW_EXPORT UI_WORKFLOW_DEPRECATED
+#endif
+
+#ifndef UI_WORKFLOW_DEPRECATED_NO_EXPORT
+#  define UI_WORKFLOW_DEPRECATED_NO_EXPORT UI_WORKFLOW_NO_EXPORT UI_WORKFLOW_DEPRECATED
+#endif
+
+#if 0 /* DEFINE_NO_DEPRECATED */
+#  ifndef UI_WORKFLOW_NO_DEPRECATED
+#    define UI_WORKFLOW_NO_DEPRECATED
+#  endif
+#endif
+
 // C System Headers
 #include <cstddef>
 #include <stdint.h>
@@ -52,7 +89,7 @@ struct opengl_image
     int          height;
 };
 
-class antara_gui
+class UI_WORKFLOW_EXPORT antara_gui
 {
     bool                                          m_first_font{false};
     void*                                         m_gl_context;
@@ -73,7 +110,7 @@ class antara_gui
     void load_font(const char* path, float size_pixels = 15.f) noexcept;
     void load_awesome_font(const char* path, float size_pixels = 15.f) noexcept;
     bool load_image(const char* id, const char*path, opengl_image& img);
-	bool load_image(const char*path, opengl_image& img);
+    bool load_image(const char*path, opengl_image& img);
     opengl_image& get_image(const char* id);
 };
 
