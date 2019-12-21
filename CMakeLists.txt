@@ -87,6 +87,7 @@ endif()
 include(GNUInstallDirs)
 
 install(FILES ui_wrapper.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES ui.wrapper.hpp DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(FILES private/cimgui.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(TARGETS ui_workflow EXPORT UiWorkflow
