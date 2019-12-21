@@ -2,20 +2,21 @@ import os
 
 when defined(linux):
     {.passL: "-lui_workflow -ldl -pthread -L" & os.getEnv("VCPKG_ROOT") & "/installed/x64-linux/lib -lglad -lSDL2".}
-    {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
+    {.passC: "-std=c++17 -DUI_WORKFLOW_STATIC_DEFINE -DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
 
 when defined(macosx):
     {.passL: "-lui_workflow -L" & os.getEnv("VCPKG_ROOT") & "/installed/x64-osx/lib -lglad -lSDL2 -liconv -framework CoreVideo -framework Cocoa -framework IOKit -framework ForceFeedback -framework Carbon -framework CoreAudio -framework AudioToolbox".}
-    {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
+    {.passC: "-std=c++17 -DUI_WORKFLOW_STATIC_DEFINE -DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
 
 when defined(windows):
     {.passL: "-L\"" & os.getEnv("ProgramFiles(x86)") & "/ui_workflow/lib\"" &
             " -lui_workflow -L\"" & os.getEnv("VCPKG_ROOT") & "/installed/x64-windows-static/lib\" -lglad -lSDL2 -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 -lwinmm.lib -lversion.lib -lsetupapi.lib".}
-    {.passC: "-DCIMGUI_DEFINE_ENUMS_AND_STRUCTS -I\"" & os.getEnv(
+    {.passC: "-std=c++17 -DUI_WORKFLOW_STATIC_DEFINE -DCIMGUI_DEFINE_ENUMS_AND_STRUCTS -I\"" & os.getEnv(
             "ProgramFiles(x86)") & "/ui_workflow/include\"".}
 
 include ui_workflow_nim/nimgui
 
+##! CWrapper
 const
     ui = "<ui_wrapper.h>"
 
@@ -49,3 +50,19 @@ proc icon*(id: e_awesome_icon): cstring {.importc: "icon", header: ui.}
 proc antara_load_image*(instance: ptr t_antara_ui, id: cstring, path: cstring): t_antara_image {.importc: "antara_load_image", header: ui.}
 proc antara_load_image_ws*(instance: ptr t_antara_ui, path: cstring): t_antara_image {.importc: "antara_load_image_ws", header: ui.}
 proc antara_get_image*(instance: ptr t_antara_ui, id: cstring): t_antara_image {.importc: "antara_get_image", header: ui.}
+
+##! C++ Wrapper
+const
+        uicpp = "<ui.wrapper.hpp>"
+
+type
+  AntaraUI {.importcpp: "antara_gui", header: uicpp.} = object
+
+proc newAntaraUI*(title: cstring, width: csize, height: csize): ptr AntaraUI {.importcpp: "new antara_gui(#,#,#)".}
+proc destroyAntaraUI*(instance: ptr AntaraUI){.importcpp: "delete #".}
+proc antaraUpdate*(instance: ptr AntaraUI) {.importcpp: "#->update()", header: uicpp.}
+proc antaraIsClose*(instance: ptr AntaraUI): bool {.importcpp: "#->is_close()", header: uicpp.}
+proc antaraPreUpdate*(instance: ptr AntaraUI) {.importcpp: "#->pre_update()", header: uicpp.}
+proc antaraShowDemo*(instance: ptr AntaraUI) {.importcpp: "#->show_demo()", header: uicpp.}
+proc antaraSetClose*(instance: ptr AntaraUI, closing: bool) {.importcpp: "#->set_close(#)", header: uicpp.}
+

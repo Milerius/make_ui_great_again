@@ -20,7 +20,7 @@ while antara_is_running(ctx) == 0:
   igSetNextWindowSize(ImVec2(x: 1280, y: 720), ImGuiCond.FirstUseEver)
   igBegin("atomicDex", addr is_open, (ImGuiWindowFlags.NoCollapse.int32 or
       ImGuiWindowFlags.MenuBar.int32).ImGuiWindowFlags)
-  echo "ET LA ???", igGetWindowSize().x
+  discard igGetWindowSize().x
   if not is_open:
       antara_close_window(ctx)
   igEnd()
