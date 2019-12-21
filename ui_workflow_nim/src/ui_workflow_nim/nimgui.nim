@@ -28,6 +28,10 @@ proc currentSourceDir(): string {.compileTime.} =
 const
   imgui_header = "<cimgui.h>"
 
+type
+    ImVec2* {.importc: "ImVec2", header: imgui_header.} = object
+        x* {.importc: "x".}: cfloat
+        y* {.importc: "y".}: cfloat
 # Enums
 type
   ImDrawCornerFlags* {.pure, size: int32.sizeof.} = enum
@@ -707,9 +711,6 @@ type
   ImGuiTextRange* {.importc: "ImGuiTextRange", header: imgui_header.} = object
     b* {.importc: "b".}: cstring
     e* {.importc: "e".}: cstring
-  ImVec2* {.importc: "ImVec2", header: imgui_header.} = object
-    x* {.importc: "x".}: float32
-    y* {.importc: "y".}: float32
   ImVec4* {.importc: "ImVec4", header: imgui_header.} = object
     x* {.importc: "x".}: float32
     y* {.importc: "y".}: float32

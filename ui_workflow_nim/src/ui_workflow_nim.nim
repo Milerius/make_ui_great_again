@@ -66,3 +66,15 @@ proc antaraPreUpdate*(instance: ptr AntaraUI) {.importcpp: "#->pre_update()", he
 proc antaraShowDemo*(instance: ptr AntaraUI) {.importcpp: "#->show_demo()", header: uicpp.}
 proc antaraSetClose*(instance: ptr AntaraUI, closing: bool) {.importcpp: "#->set_close(#)", header: uicpp.}
 
+##! ImGui C++ Extras
+#const
+#        imguicpp = "<imgui.h>"
+
+#type
+#   FFIImVec2 {.importcpp: "ImVec2", header: imguicpp} = object
+#        x* {.importc: "x".}: cfloat
+#        y* {.importc: "y".}: cfloat
+
+
+#proc ffiGetWindowSize*() : FFIImVec2 {.importcpp: "ImGui::GetWindowSize()", header: imguicpp.}
+
