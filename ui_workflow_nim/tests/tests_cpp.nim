@@ -7,6 +7,7 @@ while (not ctx.antaraIsClose()):
     igSetNextWindowSize(ImVec2(x: 1280, y: 720), ImGuiCond.FirstUseEver)
     igBegin("atomicDex", addr is_open, (ImGuiWindowFlags.NoCollapse.int32 or
         ImGuiWindowFlags.MenuBar.int32).ImGuiWindowFlags)
+    echo igGetWindowSize().x.float32
     if not is_open:
         ctx.antaraSetClose(true)
     igEnd()
