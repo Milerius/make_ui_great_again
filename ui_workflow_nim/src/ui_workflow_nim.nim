@@ -27,7 +27,7 @@ type
         id* {.importc: "id".}: cuint
         width* {.importc: "width".}: cint
         height* {.importc: "height".}: cint
-    t_antara_ui* {.importc: "t_antara_ui", header: ui, pure,
+    t_antara_ui* {.importc: "antara_gui", header: ui, pure,
             incompleteStruct.} = object
 
 proc antara_ui_create*(title: cstring; width: csize;
