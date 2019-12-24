@@ -1,4 +1,9 @@
 import os
+import strutils
+
+proc currentSourceDirF(): string {.compileTime.} =
+        result = currentSourcePath().replace("\\", "/")
+        result = result[0 ..< result.rfind("/")]
 
 when defined(linux):
     {.passL: "-lui_workflow -ldl -pthread -L" & os.getEnv("VCPKG_ROOT") & "/installed/x64-linux/lib -lglad -lSDL2".}
@@ -9,10 +14,15 @@ when defined(macosx):
     {.passC: "-std=c++17 -DUI_WORKFLOW_STATIC_DEFINE -DCIMGUI_DEFINE_ENUMS_AND_STRUCTS".}
 
 when defined(windows):
-    {.passL: "-L\"" & os.getEnv("ProgramFiles(x86)") & "/ui_workflow/lib\"" &
-            " -lui_workflow -L\"" & os.getEnv("VCPKG_ROOT") & "/installed/x64-windows-static/lib\" -lglad -lSDL2 -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 -lwinmm.lib -lversion.lib -lsetupapi.lib".}
-    {.passC: "-std=c++17 -DUI_WORKFLOW_STATIC_DEFINE -DCIMGUI_DEFINE_ENUMS_AND_STRUCTS -I\"" & os.getEnv(
-            "ProgramFiles(x86)") & "/ui_workflow/include\"".}
+    when not defined(gcc):
+        {.passL: "-L\"" & os.getEnv("ProgramFiles(x86)") & "/ui_workflow/lib\"" &
+                " -lui_workflow -L\"" & os.getEnv("VCPKG_ROOT") & "/installed/x64-windows-static/lib\" -lglad -lSDL2 -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 -lwinmm.lib -lversion.lib -lsetupapi.lib".}
+        {.passC: "-std=c++17 -DUI_WORKFLOW_STATIC_DEFINE -DCIMGUI_DEFINE_ENUMS_AND_STRUCTS -I\"" & os.getEnv(
+                "ProgramFiles(x86)") & "/ui_workflow/include\"".}
+    when defined(gcc):
+        {.passL: "-L\"" & os.getEnv("ProgramFiles(x86)") & "/ui_workflow/lib\"" & " -lui_workflow " & "-L" & currentSourceDirF() & "/ui_workflow_nim/private/sdl2-w64-mingw/lib -lSDL2 -lmingw32 -lSDL2main -lXInput -mwindows " & 
+        "-L\"" & os.getEnv("ProgramFiles(x86)") & "/GLAD/lib\" -lglad".}
+        {.passC: "-std=c++17 -DUI_WORKFLOW_STATIC_DEFINE -DCIMGUI_DEFINE_ENUMS_AND_STRUCTS -I\"" & os.getEnv("ProgramFiles(x86)") & "/ui_workflow/include\"".}
 
 include ui_workflow_nim/nimgui
 
