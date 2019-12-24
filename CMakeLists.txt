@@ -22,6 +22,11 @@ FetchContent_Declare(
         iconfontcppheaders
         URL https://github.com/juliettef/IconFontCppHeaders/archive/master.zip
 )
+if (MINGW)
+    FetchContent_Declare(glad-mingw
+            URL https://github.com/Dav1dde/glad/archive/master.zip)
+    FetchContent_MakeAvailable(glad-mingw)
+endif()
 FetchContent_MakeAvailable(imgui iconfontcppheaders)
 find_package(glad CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
@@ -45,6 +50,20 @@ target_sources(ui_workflow PRIVATE
 target_include_directories(ui_workflow PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/examples/ ${CMAKE_CURRENT_SOURCE_DIR} ${iconfontcppheaders_SOURCE_DIR})
 target_compile_features(ui_workflow PRIVATE cxx_std_17)
 if (NOT BUILD_SHARED_LIBS)
+    if (MINGW)
+        message("Hello")
+        link_directories(${CMAKE_SOURCE_DIR}/private/sdl2-w64-mingw/lib)
+        include_directories(${CMAKE_SOURCE_DIR}/private/sdl2-w64-mingw/include/SDL2)
+        include_directories(${CMAKE_SOURCE_DIR}/private/sdl2-w64-mingw/include/)
+        target_link_libraries(ui_workflow PUBLIC
+                PRIVATE
+                -lmingw32
+                -lSDL2main
+                -lSDL2
+                glad
+                -lXInput
+                -mwindows)
+    else()
     target_link_libraries(ui_workflow
             PRIVATE
             $<$<PLATFORM_ID:Darwin>:SDL2::SDL2-static>
@@ -52,6 +71,7 @@ if (NOT BUILD_SHARED_LIBS)
             $<$<PLATFORM_ID:Windows>:SDL2::SDL2-static>
             #SDL2::SDL2main
             glad::glad)
+    endif()
 else ()
     target_link_libraries(ui_workflow
             PUBLIC
@@ -80,7 +100,7 @@ if (WIN32)
 endif ()
 if (WIN32 AND NOT BUILD_SHARED_LIBS)
     #target_link_options(ui_workflow PUBLIC -Xlinker)
-    target_link_options(ui_example PUBLIC -Xlinker /NODEFAULTLIB:LIBCMTD)
+    #target_link_options(ui_example PUBLIC -Xlinker /NODEFAULTLIB:LIBCMTD)
     #target_link_options(ui_example_cpp PUBLIC)
 endif()
 

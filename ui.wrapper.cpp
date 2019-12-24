@@ -28,7 +28,7 @@
 
 
 
-inline SDL_Window* m_window;
+SDL_Window* m_window;
 
 antara_gui::antara_gui(const char* title, std::size_t width, std::size_t height)
 {
