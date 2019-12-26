@@ -3,20 +3,11 @@
 #include "ui.wrapper.hpp"
 #include "ui_wrapper.h"
 
-
-/*struct antara_ui
-{
-    std::unique_ptr<antara_gui> obj;
-};*/
-
 antara_gui*
 antara_ui_create(const char* title, size_t width, size_t height)
 {
     antara_gui* instance;
-    //antara_gui*  obj;
-
-    //instance      = (antara_gui*)malloc(sizeof(*instance));
-    //obj           = new antara_gui(title, width, height);
+    
     instance = new antara_gui(title, width, height);
 
     return instance;
@@ -27,8 +18,6 @@ antara_ui_destroy(antara_gui* instance)
     if (instance != nullptr)
     {
         delete  instance;
-        //delete instance);
-        //free(instance);
     }
 }
 void
