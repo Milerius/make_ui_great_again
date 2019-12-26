@@ -19,7 +19,6 @@ main(void)
         igSetNextWindowSize(dummy, ImGuiCond_FirstUseEver);
         static bool is_open = true;
         igBegin("atomicDex", &is_open, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_MenuBar);
-        printf("%f", igGetWindowSize().x); //< Crash Here
         if (!is_open) { antara_close_window(instance); }
         igEnd();
         // antara_show_demo(instance);
