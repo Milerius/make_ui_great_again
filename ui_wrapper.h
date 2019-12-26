@@ -72,7 +72,6 @@ extern "C"
     UI_WORKFLOW_EXPORT t_antara_image antara_load_image(antara_gui* instance, const char* id, const char* path);
     UI_WORKFLOW_EXPORT t_antara_image antara_load_image_ws(antara_gui* instance, const char* path);;
     UI_WORKFLOW_EXPORT t_antara_image antara_get_image(antara_gui* instance, const char* id);
-    UI_WORKFLOW_EXPORT t_antara_image antara_draw_image(antara_gui* instance, t_antara_image img);
 
 #ifdef __cplusplus
 }
