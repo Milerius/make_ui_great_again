@@ -19,18 +19,21 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}_n
 
 
 include(FetchContent)
+FetchContent_Declare(cimgui
+        GIT_REPOSITORY https://github.com/cimgui/cimgui.git
+        GIT_TAG docking_inter)
 FetchContent_Declare(imgui
-        URL https://github.com/rokups/imgui/archive/hdpi-support.zip)
+        URL https://github.com/ocornut/imgui/archive/docking.zip)
 FetchContent_Declare(
         iconfontcppheaders
-        URL https://github.com/juliettef/IconFontCppHeaders/archive/master.zip
+        URL https://github.com/juliettef/IconFontCppHeaders/archive/main.zip
 )
 if (MINGW)
     FetchContent_Declare(glad-mingw
             URL https://github.com/Dav1dde/glad/archive/master.zip)
     FetchContent_MakeAvailable(glad-mingw)
 endif()
-FetchContent_MakeAvailable(imgui iconfontcppheaders)
+FetchContent_MakeAvailable(imgui iconfontcppheaders cimgui)
 find_package(glad CONFIG REQUIRED)
 find_package(SDL2 CONFIG REQUIRED)
 
@@ -40,17 +43,18 @@ target_sources(ui_workflow PRIVATE
         ui.wrapper.hpp
         ui.wrapper.cpp
         ui_wrapper.cpp
-        private/cimgui.cpp
+        ${cimgui_SOURCE_DIR}/cimgui.cpp
         ${imgui_SOURCE_DIR}/imgui_demo.cpp
         ${imgui_SOURCE_DIR}/imgui_draw.cpp
-        ${imgui_SOURCE_DIR}/examples/imgui_impl_sdl.cpp
-        ${imgui_SOURCE_DIR}/examples/imgui_impl_opengl3.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_sdl.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
         ${imgui_SOURCE_DIR}/imgui_widgets.cpp
         ${imgui_SOURCE_DIR}/imgui.cpp
-        $<$<PLATFORM_ID:Darwin>:${imgui_SOURCE_DIR}/examples/imgui_impl_osx.mm>
-        $<$<PLATFORM_ID:Windows>:${imgui_SOURCE_DIR}/examples/imgui_impl_win32.cpp>)
+        ${imgui_SOURCE_DIR}/imgui_tables.cpp
+        $<$<PLATFORM_ID:Darwin>:${imgui_SOURCE_DIR}/backends/imgui_impl_osx.mm>
+        $<$<PLATFORM_ID:Windows>:${imgui_SOURCE_DIR}/backends/imgui_impl_win32.cpp>)
 
-target_include_directories(ui_workflow PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/examples/ ${CMAKE_CURRENT_SOURCE_DIR} ${iconfontcppheaders_SOURCE_DIR})
+target_include_directories(ui_workflow PUBLIC ${imgui_SOURCE_DIR} ${imgui_SOURCE_DIR}/backends/ ${CMAKE_CURRENT_SOURCE_DIR} ${iconfontcppheaders_SOURCE_DIR})
 target_compile_features(ui_workflow PRIVATE cxx_std_17)
 if (NOT BUILD_SHARED_LIBS)
     if (MINGW)
